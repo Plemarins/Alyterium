@@ -1,0 +1,81 @@
+% 言語定義
+language(japanese).
+language(english).
+language(fortran).
+language(alysterium).
+
+% 言語体系構成レベル（構造分類）
+level(phonology).        % 音韻論
+level(morphology).       % 形態論
+level(syntax).           % 統語論
+level(semantics).        % 意味論
+level(pragmatics).       % 語用論
+level(stylistics).       % 文体論
+level(grammar).          % 文法体系
+level(meta_structure).   % 構文論理・変換論
+
+has_level(Language, Level) :- language(Language), level(Level).
+
+% 例：Alysteriumは全レベルを持つ高階構造
+has_level(alysterium, phonology).
+has_level(alysterium, morphology).
+has_level(alysterium, syntax).
+has_level(alysterium, semantics).
+has_level(alysterium, pragmatics).
+has_level(alysterium, grammar).
+has_level(alysterium, stylistics).
+has_level(alysterium, meta_structure).
+
+% 単語・記号・演算子などの語彙要素
+lexeme(alysterium, fold, category(verb)).
+lexeme(alysterium, flow, category(verb)).
+lexeme(alysterium, return, category(function)).
+lexeme(fortran, if, category(control)).
+lexeme(fortran, do, category(loop)).
+
+% 構文規則
+syntax_rule(alysterium, rule(assign(X,Y), sequence([X, ':=', Y]))).
+syntax_rule(fortran, rule(assign(X,Y), sequence(['assign', X, '=', Y]))).
+
+% 意味写像
+semantic_map(alysterium, fold, meaning(reversible_loop)).
+semantic_map(alysterium, return, meaning(state_exit)).
+semantic_map(fortran, goto, meaning(jump)).
+
+% 語用的役割（文脈における意味変化）
+pragmatic_role(alysterium, fold, backward_execution).
+pragmatic_role(alysterium, flow, forward_execution).
+pragmatic_role(fortran, call, procedural_invocation).
+
+% 音韻的な構成音素とアクセシビリティ
+phoneme_sequence(alysterium, fold, [f, o, l, d]).
+pronounceable(fold).
+phonotactic_validity(alysterium, fold, true).
+
+% 形態的変化（屈折・派生）
+morphological_variant(flow, flows).
+morphological_category(fold, verb).
+
+% 文法体系：生成文法と制約文法の併用可能性
+grammar_type(alysterium, generative).
+grammar_type(alysterium, constraint_based).
+grammar_type(fortran, imperative_grammar).
+
+% 変換ルール（例：逆関数生成・構文反転）
+transform_rule(alysterium, inverse(call(F)), uncall(F)).
+transform_rule(alysterium, inverse(flow), fold).
+
+% 多層的意味論構造
+semantic_relation(fold, implies, recursion).
+semantic_relation(flow, excludes, halt).
+semantic_relation(call, precedes, return).
+
+% 対照言語体系：方向性・可逆性・冗長性
+contrastive_property(alysterium, fortran, directionality, bidirectional, unidirectional).
+contrastive_property(alysterium, fortran, reversibility, full, none).
+contrastive_property(alysterium, fortran, redundancy, minimal, moderate).
+
+% 言語体系の核構文（全体化）
+linguistic_system(Language) :-
+    language(Language),
+    forall(level(L), has_level(Language, L)).
